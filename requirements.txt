@@ -1,7 +1,13 @@
 streamlit
 crewai
 crewai-tools
+langchain
 langchain-openai
+langchain-text-splitters
+langchain-community
+langchain-chroma
 python-dotenv
-chromadb-client
+chromadb
 pypdf
+fpdf2
+markdown

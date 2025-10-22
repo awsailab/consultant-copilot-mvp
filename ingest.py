@@ -1,7 +1,7 @@
-import chromadb
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.document_loaders import PyPDFLoader, DirectoryLoader, TextLoader
-from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain_chroma import Chroma
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_community.document_loaders import PyPDFLoader, DirectoryLoader, TextLoader
+from langchain_openai import OpenAIEmbeddings
 from dotenv import load_dotenv
 import os
 
@@ -11,50 +11,53 @@ if os.getenv("OPENAI_API_KEY") is None:
     print("Error: OPENAI_API_KEY not found. Please set it in .env")
     exit()
 
-# Setup loaders for different file types
-loader = DirectoryLoader(
-    './knowledge_base/',
-    glob="**/*",
-    loader_map={
-        '.pdf': PyPDFLoader,
-        '.txt': TextLoader,
-    },
-    show_progress=True,
-    use_multithreading=True
-)
-
-# Load and split
 print("Loading knowledge base...")
-documents = loader.load()
+kb_path = './knowledge_base/'
+
+# Load .txt files
+txt_loader = DirectoryLoader(
+    kb_path,
+    glob="**/*.txt",
+    loader_cls=TextLoader,
+    show_progress=True
+)
+txt_documents = txt_loader.load()
+
+# Load .pdf files
+pdf_loader = DirectoryLoader(
+    kb_path,
+    glob="**/*.pdf",
+    loader_cls=PyPDFLoader,
+    show_progress=True
+)
+pdf_documents = pdf_loader.load()
+
+# Combine the documents
+documents = txt_documents + pdf_documents
+if not documents:
+    print("No documents found in ./knowledge_base/. Please add .txt or .pdf files.")
+    exit()
+    
+print(f"Loaded {len(documents)} total documents.")
+
+# Split the documents
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
 texts = text_splitter.split_documents(documents)
 
-print(f"Loaded and split {len(texts)} chunks.")
+print(f"Split into {len(texts)} chunks.")
 
-# Setup ChromaDB
+# --- Simplified Ingestion using LangChain's Chroma wrapper ---
+print("Ingesting documents into ChromaDB...")
 db_path = "chroma_db"
-client = chromadb.PersistentClient(path=db_path)
+collection_name = "consultant_copilot"
 embedding_function = OpenAIEmbeddings()
 
-# Get or create the collection
-collection_name = "consultant_copilot"
-collection = client.get_or_create_collection(
-    name=collection_name, 
-    embedding_function=embedding_function
+# This one command creates the db, embeds the docs, and saves it
+vector_store = Chroma.from_documents(
+    documents=texts,
+    embedding=embedding_function,
+    persist_directory=db_path,
+    collection_name=collection_name
 )
-
-# Ingest into ChromaDB
-print("Ingesting documents into ChromaDB...")
-# We add documents in batches of 100
-for i in range(0, len(texts), 100):
-    batch_texts = [doc.page_content for doc in texts[i:i+100]]
-    batch_metadatas = [doc.metadata for doc in texts[i:i+100]]
-    batch_ids = [f"doc_{i+j}" for j in range(len(batch_texts))]
-    
-    collection.add(
-        documents=batch_texts,
-        metadatas=batch_metadatas,
-        ids=batch_ids
-    )
 
 print(f"✅ Ingestion complete! {len(texts)} chunks added to '{collection_name}' at {db_path}")

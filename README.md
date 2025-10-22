@@ -1,5 +1,3 @@
-# consultant-copilot-mvp
-
 # Consultant's Copilot MVP: AWS Readiness Advisor
 
 This project is a "Consultant's Copilot," an AI-powered assistant built to support IT/AI consulting. This MVP (Minimum Viable Product) is designed as a post-meeting analysis tool that takes a client meeting transcript, analyzes it, and generates a sales-oriented proposal for an "AWS Legacy Migration & AI Readiness Assessment."
@@ -14,6 +12,7 @@ The system uses a multi-agent (CrewAI) approach to simulate a consulting team:
 * **Automated Requirement Extraction:** Identifies client pain points, business goals, and technical constraints.
 * **Retrieval-Augmented Generation (RAG):** The Architect agent queries a local ChromaDB vector store (loaded with your case studies and service docs) to find relevant context.
 * **Automated Proposal Generation:** Outputs a client-ready, sales-oriented proposal in markdown.
+* **Multi-Format Download:** Allows you to instantly download the generated proposal as a `.md`, `.txt`, or `.pdf` file.
 * **Simple Web UI:** Built with Streamlit for easy file uploads and report viewing.
 
 ## 🛠️ Tech Stack
@@ -24,6 +23,7 @@ The system uses a multi-agent (CrewAI) approach to simulate a consulting team:
 * **LLM Provider:** OpenAI (GPT-4o)
 * **Vector Store (RAG):** ChromaDB (local)
 * **Document Loading:** LangChain
+* **PDF Generation:** fpdf2
 
 ## 🚀 Getting Started
 
@@ -32,7 +32,7 @@ This project is designed to run seamlessly in GitHub Codespaces.
 ### Prerequisites
 
 1.  A GitHub Account (to use Codespaces).
-2.  An **OpenAI API Key** with access to GPT-4 models.
+2.  An **OpenAI API Key** with billing set up.
 
 ### Setup & Launch
 
@@ -63,7 +63,7 @@ This project is designed to run seamlessly in GitHub Codespaces.
         ```bash
         python ingest.py
         ```
-    * You will see a "Ingestion complete!" message. A `chroma_db/` folder will be created (this is also ignored by git).
+    * You will see a "Ingestion complete!" message.
 
 5.  **Run the Application:**
     * In the terminal, run the Streamlit app:
@@ -75,9 +75,9 @@ This project is designed to run seamlessly in GitHub Codespaces.
 ## Usage
 
 1.  Open the Streamlit application in your browser.
-2.  Click **"Upload your transcript (.txt)"** and select a plain text file.
-3.  The app will show a spinner while the CrewAI agents work (approx. 30-60 seconds).
-4.  The final, formatted proposal will appear on the screen, ready to be copied.
+2.  Upload a client meeting transcript (e.g., `test_transcript_01.txt`).
+3.  The app will show a spinner while the CrewAI agents work.
+4.  The final, formatted proposal will appear on the screen, with download buttons for `.md`, `.txt`, and `.pdf` formats.
 
 ## 📈 Future Work
 
@@ -87,5 +87,3 @@ This MVP provides the core value. The next steps for a production system include
 * **Managed Vector DB:** Migrate from local ChromaDB to a managed service like Pinecone or Amazon OpenSearch Serverless.
 * **Automated Ingest:** Create an S3 $\rightarrow$ Lambda pipeline to automatically update the knowledge base when new documents are added.
 * **CRM Integration:** Add a final step to automatically create a new "Opportunity" or "Draft Email" in a CRM like HubSpot or Salesforce.
-
-
