@@ -1,0 +1,19 @@
+Case Study: Global Retail Inc. AWS Migration
+
+Pain Points:
+- Slow, aging on-premise servers.
+- High data center maintenance costs.
+- Inability to scale for holiday shopping peaks.
+- Data was siloed and unusable for analytics.
+
+Solution:
+- Full "re-platform" migration to AWS.
+- Used AWS EC2 for compute, RDS for SQL Server database.
+- Implemented S3 for data lake storage.
+- Deployed CloudFront CDN to handle peak traffic.
+
+Outcomes:
+- 50% reduction in TCO (Total Cost of Ownership).
+- 4x faster application performance.
+- Enabled new AI-driven product recommendation engine on S3 data.
+- 100% uptime during peak season.

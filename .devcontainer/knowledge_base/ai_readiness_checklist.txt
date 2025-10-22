@@ -1,0 +1,21 @@
+Our AI Readiness Assessment Service
+
+We analyze your business across four key pillars:
+
+1.  Strategy & Goals:
+    - Do you have a clear business problem for AI to solve?
+    - Is there executive buy-in for an AI initiative?
+
+2.  Data Readiness:
+    - Where is your data? Is it centralized?
+    - Is data quality high and is it accessible?
+    - Do you have data governance policies in place?
+
+3.  Technology & Infrastructure:
+    - Are you on the cloud? The cloud is the foundation for AI.
+    - Can your current infra support data pipelines and model training?
+    - We recommend AWS services like S3, Redshift, and SageMaker.
+
+4.  People & Skills:
+    - Do you have data scientists or analysts?
+    - Is the team trained on data-driven decision making?
