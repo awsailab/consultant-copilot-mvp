@@ -1,0 +1,13 @@
+Alex (Consultant): "Thanks for meeting today, Sarah and Mark. To kick things off, can you walk me through the current challenges you're facing with your logistics platform?"
+
+Mark (Client - Ops): "Absolutely, Alex. I'll be blunt: we're drowning. Our main application—the one that runs our entire warehouse—is over a decade old. Our team spends hours just waiting. To pull a single end-of-day report, it can take 45 minutes. We're losing time, and our competitors are running circles around us."
+
+Sarah (Client - IT): "Mark's right. That app is a huge Java monolith, and it's running on a stack of Dell servers in our back-office data center. My main worry is that it's tied to an ancient SQL Server 2008 database. It's not just slow; it's a massive security and compliance risk. We can't even apply modern patches."
+
+Mark (Client - Ops): "And the CEO is breathing down our necks. She just came back from a conference and keeps asking, 'Why aren't we using AI?' She wants us to use our sales data to build predictive analytics models for demand forecasting. But as Sarah said, all our data is completely locked up in that old system."
+
+Alex (Consultant): "Okay, this is very clear. It sounds like a classic modernization problem. The goal isn't just to make the old app faster; it's to unlock that data so you can build new, smarter tools."
+
+Sarah (Client - IT): "Exactly! But we're stuck. We have no internal cloud team. We use Office 365, but that's the extent of our 'cloud' experience. We've heard AWS is the place to be for this stuff, but we have no idea where to even start. Honestly, how do we even know if we're ready for AI? What does that process even look like?"
+
+Alex (Consultant): "That's the perfect question, and it's the right place to start. This is a very common scenario. My team and I will digest this. We can put together a preliminary memo on what an engagement would look like, starting with an assessment to build that roadmap for you."
